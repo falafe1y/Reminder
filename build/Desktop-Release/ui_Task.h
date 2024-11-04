@@ -31,13 +31,13 @@ public:
     QGridLayout *gridLayout;
     QSpacerItem *verticalSpacer_2;
     QSpacerItem *verticalSpacer;
-    QLabel *taskDescription;
+    QLabel *TaskText;
     QFrame *line;
     QHBoxLayout *layoutBtnsAndDateTime;
     QPushButton *btnFavorite;
     QVBoxLayout *layoutDateTime;
-    QLineEdit *lineDate;
-    QLineEdit *lineTime;
+    QLineEdit *TaskDate;
+    QLineEdit *TaskTime;
     QHBoxLayout *layoutBtns;
     QPushButton *btnEdit;
     QPushButton *btnClose;
@@ -67,20 +67,20 @@ public:
 
         gridLayout->addItem(verticalSpacer, 4, 0, 1, 1);
 
-        taskDescription = new QLabel(frame);
-        taskDescription->setObjectName("taskDescription");
+        TaskText = new QLabel(frame);
+        TaskText->setObjectName("TaskText");
         QSizePolicy sizePolicy(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(taskDescription->sizePolicy().hasHeightForWidth());
-        taskDescription->setSizePolicy(sizePolicy);
+        sizePolicy.setHeightForWidth(TaskText->sizePolicy().hasHeightForWidth());
+        TaskText->setSizePolicy(sizePolicy);
         QFont font;
         font.setPointSize(22);
         font.setBold(true);
-        taskDescription->setFont(font);
-        taskDescription->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        TaskText->setFont(font);
+        TaskText->setAlignment(Qt::AlignmentFlag::AlignCenter);
 
-        gridLayout->addWidget(taskDescription, 3, 0, 1, 1);
+        gridLayout->addWidget(TaskText, 3, 0, 1, 1);
 
         line = new QFrame(frame);
         line->setObjectName("line");
@@ -99,33 +99,33 @@ public:
 
         layoutDateTime = new QVBoxLayout();
         layoutDateTime->setObjectName("layoutDateTime");
-        lineDate = new QLineEdit(frame);
-        lineDate->setObjectName("lineDate");
-        sizePolicy.setHeightForWidth(lineDate->sizePolicy().hasHeightForWidth());
-        lineDate->setSizePolicy(sizePolicy);
+        TaskDate = new QLineEdit(frame);
+        TaskDate->setObjectName("TaskDate");
+        sizePolicy.setHeightForWidth(TaskDate->sizePolicy().hasHeightForWidth());
+        TaskDate->setSizePolicy(sizePolicy);
         QFont font1;
         font1.setPointSize(12);
         font1.setBold(true);
         font1.setItalic(false);
         font1.setUnderline(false);
         font1.setKerning(true);
-        lineDate->setFont(font1);
-        lineDate->setFrame(false);
-        lineDate->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        lineDate->setReadOnly(true);
+        TaskDate->setFont(font1);
+        TaskDate->setFrame(false);
+        TaskDate->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        TaskDate->setReadOnly(true);
 
-        layoutDateTime->addWidget(lineDate);
+        layoutDateTime->addWidget(TaskDate);
 
-        lineTime = new QLineEdit(frame);
-        lineTime->setObjectName("lineTime");
-        sizePolicy.setHeightForWidth(lineTime->sizePolicy().hasHeightForWidth());
-        lineTime->setSizePolicy(sizePolicy);
-        lineTime->setFont(font1);
-        lineTime->setFrame(false);
-        lineTime->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        lineTime->setReadOnly(true);
+        TaskTime = new QLineEdit(frame);
+        TaskTime->setObjectName("TaskTime");
+        sizePolicy.setHeightForWidth(TaskTime->sizePolicy().hasHeightForWidth());
+        TaskTime->setSizePolicy(sizePolicy);
+        TaskTime->setFont(font1);
+        TaskTime->setFrame(false);
+        TaskTime->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        TaskTime->setReadOnly(true);
 
-        layoutDateTime->addWidget(lineTime);
+        layoutDateTime->addWidget(TaskTime);
 
 
         layoutBtnsAndDateTime->addLayout(layoutDateTime);
@@ -162,14 +162,14 @@ public:
 
         layoutBtnsAndDateTime->addLayout(layoutBtns);
 
-        layoutBtnsAndDateTime->setStretch(0, 10);
-        layoutBtnsAndDateTime->setStretch(1, 9);
-        layoutBtnsAndDateTime->setStretch(2, 9);
+        layoutBtnsAndDateTime->setStretch(0, 1);
+        layoutBtnsAndDateTime->setStretch(1, 1);
+        layoutBtnsAndDateTime->setStretch(2, 1);
 
         gridLayout->addLayout(layoutBtnsAndDateTime, 0, 0, 1, 1);
 
         line->raise();
-        taskDescription->raise();
+        TaskText->raise();
 
         gridLayout_2->addWidget(frame, 0, 0, 1, 1);
 
@@ -185,12 +185,12 @@ public:
     void retranslateUi(QWidget *Task)
     {
         Task->setWindowTitle(QCoreApplication::translate("Task", "Form", nullptr));
-        taskDescription->setText(QCoreApplication::translate("Task", "TextLabel", nullptr));
+        TaskText->setText(QCoreApplication::translate("Task", "TextLabel", nullptr));
         btnFavorite->setText(QString());
-        lineDate->setInputMask(QString());
-        lineDate->setText(QCoreApplication::translate("Task", "24.07.25", nullptr));
-        lineTime->setInputMask(QString());
-        lineTime->setText(QCoreApplication::translate("Task", "18:45", nullptr));
+        TaskDate->setInputMask(QString());
+        TaskDate->setText(QCoreApplication::translate("Task", "24.07.25", nullptr));
+        TaskTime->setInputMask(QString());
+        TaskTime->setText(QCoreApplication::translate("Task", "18:45", nullptr));
         btnEdit->setText(QString());
         btnClose->setText(QString());
     } // retranslateUi

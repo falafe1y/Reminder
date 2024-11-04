@@ -23,16 +23,19 @@ public:
 
 private slots:
     void openEditTaskWindow() {
-        EditTaskWindow *editTaskWindow = new EditTaskWindow();
-        editTaskWindow->exec();
+        EditTaskWindow *editTaskWindow = new EditTaskWindow(this);
+        editTaskWindow->addNewTask();
+        delete editTaskWindow;
     }
 
 private:
     Ui::MainWindow *ui;
-    void setStyleMain();
-
-private:
     static int tasksCount;
     const int maxColumns = 3;
+
+private:
+    void setStyleMain();
+    void delAll();
+
 };
 #endif // MAINWINDOW_H

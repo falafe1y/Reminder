@@ -77,7 +77,7 @@
        </spacer>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="taskDescription">
+       <widget class="QLabel" name="TaskText">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
@@ -112,7 +112,7 @@
        </widget>
       </item>
       <item row="0" column="0">
-       <layout class="QHBoxLayout" name="layoutBtnsAndDateTime" stretch="10,9,9">
+       <layout class="QHBoxLayout" name="layoutBtnsAndDateTime" stretch="1,1,1">
         <item>
          <widget class="QPushButton" name="btnFavorite">
           <property name="text">
@@ -123,7 +123,7 @@
         <item>
          <layout class="QVBoxLayout" name="layoutDateTime">
           <item>
-           <widget class="QLineEdit" name="lineDate">
+           <widget class="QLineEdit" name="TaskDate">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -157,7 +157,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="lineTime">
+           <widget class="QLineEdit" name="TaskTime">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -254,7 +254,7 @@
      </layout>
      <zorder>verticalSpacer</zorder>
      <zorder>line</zorder>
-     <zorder>taskDescription</zorder>
+     <zorder>TaskText</zorder>
      <zorder>verticalSpacer_2</zorder>
      <zorder></zorder>
     </widget>

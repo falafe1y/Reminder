@@ -9,9 +9,10 @@
 #ifndef UI_EDITTASKWINDOW_H
 #define UI_EDITTASKWINDOW_H
 
+#include <QtCore/QDate>
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QCalendarWidget>
+#include <QtWidgets/QDateEdit>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -25,44 +26,74 @@ class Ui_EditTaskWindow
 {
 public:
     QGridLayout *gridLayout;
-    QTimeEdit *timeEdit;
+    QDateEdit *taskDate;
+    QTimeEdit *taskTime;
+    QLineEdit *taskText;
     QHBoxLayout *horizontalLayout;
-    QPushButton *btnCancel;
     QPushButton *btnSave;
-    QCalendarWidget *calendarWidget;
-    QLineEdit *lineEdit;
+    QPushButton *btnCancel;
 
     void setupUi(QDialog *EditTaskWindow)
     {
         if (EditTaskWindow->objectName().isEmpty())
             EditTaskWindow->setObjectName("EditTaskWindow");
-        EditTaskWindow->resize(600, 450);
+        EditTaskWindow->resize(658, 495);
         gridLayout = new QGridLayout(EditTaskWindow);
         gridLayout->setObjectName("gridLayout");
-        timeEdit = new QTimeEdit(EditTaskWindow);
-        timeEdit->setObjectName("timeEdit");
+        taskDate = new QDateEdit(EditTaskWindow);
+        taskDate->setObjectName("taskDate");
         QSizePolicy sizePolicy(QSizePolicy::Policy::Minimum, QSizePolicy::Policy::Expanding);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(timeEdit->sizePolicy().hasHeightForWidth());
-        timeEdit->setSizePolicy(sizePolicy);
-        timeEdit->setAlignment(Qt::AlignmentFlag::AlignCenter);
-        timeEdit->setReadOnly(false);
-        timeEdit->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
-        timeEdit->setAccelerated(false);
-        timeEdit->setProperty("showGroupSeparator", QVariant(false));
+        sizePolicy.setHeightForWidth(taskDate->sizePolicy().hasHeightForWidth());
+        taskDate->setSizePolicy(sizePolicy);
+        QFont font;
+        font.setPointSize(18);
+        taskDate->setFont(font);
+        taskDate->setWrapping(false);
+        taskDate->setFrame(false);
+        taskDate->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        taskDate->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
+        taskDate->setKeyboardTracking(true);
+        taskDate->setMinimumDateTime(QDateTime(QDate(2024, 10, 31), QTime(18, 0, 0)));
+        taskDate->setCalendarPopup(true);
+        taskDate->setDate(QDate(2024, 11, 1));
 
-        gridLayout->addWidget(timeEdit, 1, 0, 1, 1);
+        gridLayout->addWidget(taskDate, 0, 0, 1, 1);
+
+        taskTime = new QTimeEdit(EditTaskWindow);
+        taskTime->setObjectName("taskTime");
+        sizePolicy.setHeightForWidth(taskTime->sizePolicy().hasHeightForWidth());
+        taskTime->setSizePolicy(sizePolicy);
+        taskTime->setFont(font);
+        taskTime->setWrapping(false);
+        taskTime->setFrame(false);
+        taskTime->setAlignment(Qt::AlignmentFlag::AlignCenter);
+        taskTime->setReadOnly(false);
+        taskTime->setButtonSymbols(QAbstractSpinBox::ButtonSymbols::NoButtons);
+        taskTime->setSpecialValueText(QString::fromUtf8("00:00"));
+        taskTime->setAccelerated(false);
+        taskTime->setProperty("showGroupSeparator", QVariant(false));
+        taskTime->setCalendarPopup(true);
+
+        gridLayout->addWidget(taskTime, 1, 0, 1, 1);
+
+        taskText = new QLineEdit(EditTaskWindow);
+        taskText->setObjectName("taskText");
+        QSizePolicy sizePolicy1(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(taskText->sizePolicy().hasHeightForWidth());
+        taskText->setSizePolicy(sizePolicy1);
+        taskText->setFont(font);
+        taskText->setMaxLength(16);
+        taskText->setFrame(false);
+        taskText->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+        gridLayout->addWidget(taskText, 2, 0, 1, 1);
 
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        btnCancel = new QPushButton(EditTaskWindow);
-        btnCancel->setObjectName("btnCancel");
-        sizePolicy.setHeightForWidth(btnCancel->sizePolicy().hasHeightForWidth());
-        btnCancel->setSizePolicy(sizePolicy);
-
-        horizontalLayout->addWidget(btnCancel);
-
         btnSave = new QPushButton(EditTaskWindow);
         btnSave->setObjectName("btnSave");
         sizePolicy.setHeightForWidth(btnSave->sizePolicy().hasHeightForWidth());
@@ -70,31 +101,21 @@ public:
 
         horizontalLayout->addWidget(btnSave);
 
+        btnCancel = new QPushButton(EditTaskWindow);
+        btnCancel->setObjectName("btnCancel");
+        sizePolicy.setHeightForWidth(btnCancel->sizePolicy().hasHeightForWidth());
+        btnCancel->setSizePolicy(sizePolicy);
 
-        gridLayout->addLayout(horizontalLayout, 3, 0, 1, 1);
+        horizontalLayout->addWidget(btnCancel);
 
-        calendarWidget = new QCalendarWidget(EditTaskWindow);
-        calendarWidget->setObjectName("calendarWidget");
-        calendarWidget->setGridVisible(true);
-        calendarWidget->setSelectionMode(QCalendarWidget::SelectionMode::SingleSelection);
-        calendarWidget->setHorizontalHeaderFormat(QCalendarWidget::HorizontalHeaderFormat::ShortDayNames);
-        calendarWidget->setVerticalHeaderFormat(QCalendarWidget::VerticalHeaderFormat::NoVerticalHeader);
-        calendarWidget->setNavigationBarVisible(true);
-        calendarWidget->setDateEditEnabled(true);
 
-        gridLayout->addWidget(calendarWidget, 0, 0, 1, 1);
-
-        lineEdit = new QLineEdit(EditTaskWindow);
-        lineEdit->setObjectName("lineEdit");
-        QSizePolicy sizePolicy1(QSizePolicy::Policy::Expanding, QSizePolicy::Policy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
-        lineEdit->setSizePolicy(sizePolicy1);
-
-        gridLayout->addWidget(lineEdit, 2, 0, 1, 1);
+        gridLayout->addLayout(horizontalLayout, 4, 0, 1, 1);
 
         gridLayout->setRowStretch(0, 1);
+        gridLayout->setRowStretch(1, 1);
+        gridLayout->setRowStretch(2, 1);
+        gridLayout->setRowStretch(3, 1);
+        gridLayout->setRowStretch(4, 1);
 
         retranslateUi(EditTaskWindow);
 
@@ -104,9 +125,10 @@ public:
     void retranslateUi(QDialog *EditTaskWindow)
     {
         EditTaskWindow->setWindowTitle(QCoreApplication::translate("EditTaskWindow", "Dialog", nullptr));
-        timeEdit->setSpecialValueText(QCoreApplication::translate("EditTaskWindow", "00:00", nullptr));
-        btnCancel->setText(QCoreApplication::translate("EditTaskWindow", "\320\236\321\202\320\274\320\265\320\275\320\260", nullptr));
+        taskDate->setSpecialValueText(QString());
+        taskTime->setDisplayFormat(QCoreApplication::translate("EditTaskWindow", "HH:mm", nullptr));
         btnSave->setText(QCoreApplication::translate("EditTaskWindow", "\320\241\320\276\321\205\321\200\320\260\320\275\320\270\321\202\321\214", nullptr));
+        btnCancel->setText(QCoreApplication::translate("EditTaskWindow", "\320\236\321\202\320\274\320\265\320\275\320\270\321\202\321\214", nullptr));
     } // retranslateUi
 
 };

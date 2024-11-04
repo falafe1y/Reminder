@@ -2,35 +2,38 @@
 #include "ui_Task.h"
 #include "EditTaskWindow.h"
 #include <QMessageBox>
+#include <QDate>
+#include <QTime>
+#include <QDebug>
 
-Task::Task(QString taskText, QWidget *parent)
+int Task::countAllTasks = 0;
+int Task::countFavoriteTasks = 0;
+
+Task::Task(QString taskText, QDate taskDate, QTime taskTime, QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Task)
 {
     ui->setupUi(this);
-    EditTaskWindow* editTaskWindow = new EditTaskWindow;
-    setStyleForTask();
+    EditTaskWindow* editTaskWindow = new EditTaskWindow();
 
-    if(taskText.length() > maxTaskTextLength) {
-        // QString truncatedText = ui->taskDescription->toPlainText().left(10);
-        ui->taskDescription->setText(taskText);
-        taskError();
-    }
-    else {
-        ui->taskDescription->setText(taskText);
-    }
+    QString dateString = taskDate.toString("dd.MM.yyyy");
+    QString timeString = taskTime.toString("HH:mm");
+
+    ui->TaskText->setText(taskText);
+    ui->TaskDate->setText(dateString);
+    ui->TaskTime->setText(timeString);
+
+    setStyleForTask();
 
     connect(ui->btnClose, &QPushButton::clicked, this, &Task::closeRequested);
     connect(ui->btnEdit, &QPushButton::clicked, this, [this, editTaskWindow]() {
         editTaskWindow->editThisTask(this);
     });
 
-}
+    countAllTasks++;
 
-// void Task::editRequested() {
-//     Task* editedTask = this;
-//     editTaskWindow->editThisTask(editedTask);
-// }
+    qDebug() << "Всего: " << countAllTasks;
+}
 
 void Task::taskError() {
     QMessageBox* msgBox = new QMessageBox;
@@ -43,13 +46,57 @@ void Task::taskError() {
     delete msgBox;
 }
 
+void Task::addToFavorite(bool add) {
+    if (add) {
+        countFavoriteTasks++;
+        qDebug() << " Всего фаворитов: " << countFavoriteTasks;
+    }
+    else {
+        countFavoriteTasks--;
+        qDebug() << " Всего фаворитов: " << countFavoriteTasks;
+    }
+}
+
 void Task::on_btnFavorite_clicked() {
-    static bool isFavorite = false; // Переменная для отслеживания состояния
-    QString favoriteImagePath = isFavorite ? "C:/Users/79059/Documents/QT/Reminder/image/star.png"
-                                           : "C:/Users/79059/Documents/QT/Reminder/image/favoritetask.png";
+    static bool isFavorite = true; // Переменная для отслеживания состояния
+    QString favoriteImagePath;
+
+    if (isFavorite) {
+        favoriteImagePath = "C:/Users/79059/Documents/QT/Reminder/image/star.png";
+        addToFavorite(isFavorite);
+    }
+    else {
+        favoriteImagePath = "C:/Users/79059/Documents/QT/Reminder/image/favoritetask.png";
+        addToFavorite(isFavorite);
+    }
+
     QIcon favoriteIcon(favoriteImagePath);
     ui->btnFavorite->setIcon(favoriteIcon);
     isFavorite = !isFavorite; // Переключаем состояние
+}
+
+QString Task::getTaskText() {
+    return ui->TaskText->text();
+}
+
+QDate Task::getTaskDate() {
+    return QDate::fromString(ui->TaskDate->text(), "dd.MM.yyyy");
+}
+
+QTime Task::getTaskTime() {
+    return QTime::fromString(ui->TaskTime->text(), "hh:mm");
+}
+
+void Task::setTaskText(QString newTaskText) {
+    ui->TaskText->setText(newTaskText);
+}
+
+void Task::setTaskDate(QDate newTaskDate) {
+    ui->TaskDate->setText(newTaskDate.toString("dd.MM.yyyy"));
+}
+
+void Task::setTaskTime(QTime newTaskTime) {
+    ui->TaskTime->setText(newTaskTime.toString("hh:mm"));
 }
 
 void Task::setStyleForTask() {
@@ -112,5 +159,7 @@ void Task::setStyleForTask() {
 
 Task::~Task()
 {
+    countAllTasks--;
+    qDebug() << "Всего: " << countAllTasks;
     delete ui;
 }

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QString>
+#include <QDate>
+#include <QTime>
 
 namespace Ui {
 class Task;
@@ -13,7 +15,13 @@ class Task : public QWidget
     Q_OBJECT
 
 public:
-    explicit Task(QString taskText, QWidget *parent = nullptr);
+    explicit Task(QString taskText, QDate taskDate, QTime taskTime, QWidget *parent = nullptr);
+    QString getTaskText();
+    QDate getTaskDate();
+    QTime getTaskTime();
+    void setTaskText(QString newTaskText);
+    void setTaskDate(QDate newTaskDate);
+    void setTaskTime(QTime newTaskTime);
     ~Task();
 
 signals:
@@ -22,11 +30,13 @@ signals:
 
 private:
     Ui::Task *ui;
-    void taskError();
-    void setStyleForTask();
+    static int countAllTasks;
+    static int countFavoriteTasks;
 
 private:
-    short maxTaskTextLength = 16;
+    void taskError();
+    void setStyleForTask();
+    void addToFavorite(bool add);
 
 private slots:
     void on_btnFavorite_clicked();

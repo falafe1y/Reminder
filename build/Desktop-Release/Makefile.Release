@@ -16,7 +16,7 @@ CXX           = g++
 DEFINES       = -DUNICODE -D_UNICODE -DWIN32 -DMINGW_HAS_SECURE_API=1 -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB -DQT_NEEDS_QMAIN
 CFLAGS        = -fno-keep-inline-dllexport -O2 -Wall -Wextra -Wextra $(DEFINES)
 CXXFLAGS      = -fno-keep-inline-dllexport -O2 -std=gnu++1z -Wall -Wextra -Wextra -fexceptions -mthreads $(DEFINES)
-INCPATH       = -I../../../Reminder -I. -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -Irelease -I. -I/include -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ 
+INCPATH       = -I../../../Reminder -I. -I../../libs -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -Irelease -I. -I/include -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ 
 LINKER      =        g++
 LFLAGS        =        -Wl,-s -Wl,-subsystem,windows -mthreads
 LIBS        =        C:\Qt\6.7.2\mingw_64\lib\libQt6Widgets.a C:\Qt\6.7.2\mingw_64\lib\libQt6Gui.a C:\Qt\6.7.2\mingw_64\lib\libQt6Core.a -lmingw32 C:\Qt\6.7.2\mingw_64\lib\libQt6EntryPoint.a -lshell32  
@@ -121,8 +121,9 @@ compiler_moc_header_make_all: release/moc_EditTaskWindow.cpp release/moc_MainWin
 compiler_moc_header_clean:
 	-$(DEL_FILE) release\moc_EditTaskWindow.cpp release\moc_MainWindow.cpp release\moc_Task.cpp
 release/moc_EditTaskWindow.cpp: ../../EditTaskWindow.h \
-		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
-		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
+		../../Task.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qtguiglobal.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qglobal.h \
@@ -173,7 +174,6 @@ release/moc_EditTaskWindow.cpp: ../../EditTaskWindow.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qtguiexports.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qobjectdefs.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qnamespace.h \
@@ -308,9 +308,16 @@ release/moc_EditTaskWindow.cpp: ../../EditTaskWindow.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qinputmethod.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QString \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QTime \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
 		release/moc_predefs.h \
 		C:/Qt/6.7.2/mingw_64/bin/moc.exe
-	C:\Qt\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/79059/Documents/QT/Reminder/build/Desktop-Release/release/moc_predefs.h -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ -IC:/Users/79059/Documents/QT/Reminder -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -I. -IC:/Users/79059/gcc/include/c++/14.1.0 -IC:/Users/79059/gcc/include/c++/14.1.0/x86_64-w64-mingw32 -IC:/Users/79059/gcc/include/c++/14.1.0/backward -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include-fixed -IC:/Users/79059/gcc/x86_64-w64-mingw32/include ..\..\EditTaskWindow.h -o release\moc_EditTaskWindow.cpp
+	C:\Qt\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/79059/Documents/QT/Reminder/build/Desktop-Release/release/moc_predefs.h -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ -IC:/Users/79059/Documents/QT/Reminder -IC:/Users/79059/Documents/QT/Reminder/libs -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -I. -IC:/Users/79059/gcc/include/c++/14.1.0 -IC:/Users/79059/gcc/include/c++/14.1.0/x86_64-w64-mingw32 -IC:/Users/79059/gcc/include/c++/14.1.0/backward -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include-fixed -IC:/Users/79059/gcc/x86_64-w64-mingw32/include ..\..\EditTaskWindow.h -o release\moc_EditTaskWindow.cpp
 
 release/moc_MainWindow.cpp: ../../MainWindow.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
@@ -504,9 +511,16 @@ release/moc_MainWindow.cpp: ../../MainWindow.h \
 		../../Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/QString \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QTime \
+		../../EditTaskWindow.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
 		release/moc_predefs.h \
 		C:/Qt/6.7.2/mingw_64/bin/moc.exe
-	C:\Qt\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/79059/Documents/QT/Reminder/build/Desktop-Release/release/moc_predefs.h -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ -IC:/Users/79059/Documents/QT/Reminder -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -I. -IC:/Users/79059/gcc/include/c++/14.1.0 -IC:/Users/79059/gcc/include/c++/14.1.0/x86_64-w64-mingw32 -IC:/Users/79059/gcc/include/c++/14.1.0/backward -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include-fixed -IC:/Users/79059/gcc/x86_64-w64-mingw32/include ..\..\MainWindow.h -o release\moc_MainWindow.cpp
+	C:\Qt\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/79059/Documents/QT/Reminder/build/Desktop-Release/release/moc_predefs.h -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ -IC:/Users/79059/Documents/QT/Reminder -IC:/Users/79059/Documents/QT/Reminder/libs -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -I. -IC:/Users/79059/gcc/include/c++/14.1.0 -IC:/Users/79059/gcc/include/c++/14.1.0/x86_64-w64-mingw32 -IC:/Users/79059/gcc/include/c++/14.1.0/backward -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include-fixed -IC:/Users/79059/gcc/x86_64-w64-mingw32/include ..\..\MainWindow.h -o release\moc_MainWindow.cpp
 
 release/moc_Task.cpp: ../../Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QWidget \
@@ -696,9 +710,13 @@ release/moc_Task.cpp: ../../Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/QString \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QTime \
 		release/moc_predefs.h \
 		C:/Qt/6.7.2/mingw_64/bin/moc.exe
-	C:\Qt\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/79059/Documents/QT/Reminder/build/Desktop-Release/release/moc_predefs.h -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ -IC:/Users/79059/Documents/QT/Reminder -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -I. -IC:/Users/79059/gcc/include/c++/14.1.0 -IC:/Users/79059/gcc/include/c++/14.1.0/x86_64-w64-mingw32 -IC:/Users/79059/gcc/include/c++/14.1.0/backward -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include-fixed -IC:/Users/79059/gcc/x86_64-w64-mingw32/include ..\..\Task.h -o release\moc_Task.cpp
+	C:\Qt\6.7.2\mingw_64\bin\moc.exe $(DEFINES) --include C:/Users/79059/Documents/QT/Reminder/build/Desktop-Release/release/moc_predefs.h -IC:/Qt/6.7.2/mingw_64/mkspecs/win32-g++ -IC:/Users/79059/Documents/QT/Reminder -IC:/Users/79059/Documents/QT/Reminder/libs -IC:/Qt/6.7.2/mingw_64/include -IC:/Qt/6.7.2/mingw_64/include/QtWidgets -IC:/Qt/6.7.2/mingw_64/include/QtGui -IC:/Qt/6.7.2/mingw_64/include/QtCore -I. -IC:/Users/79059/gcc/include/c++/14.1.0 -IC:/Users/79059/gcc/include/c++/14.1.0/x86_64-w64-mingw32 -IC:/Users/79059/gcc/include/c++/14.1.0/backward -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include -IC:/Users/79059/gcc/lib/gcc/x86_64-w64-mingw32/14.1.0/include-fixed -IC:/Users/79059/gcc/x86_64-w64-mingw32/include ..\..\Task.h -o release\moc_Task.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -732,8 +750,9 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 release/EditTaskWindow.o: ../../EditTaskWindow.cpp ../../EditTaskWindow.h \
-		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
-		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
+		../../Task.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QWidget \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qtwidgetsglobal.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qtguiglobal.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qglobal.h \
@@ -784,7 +803,6 @@ release/EditTaskWindow.o: ../../EditTaskWindow.cpp ../../EditTaskWindow.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qtguiexports.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qtwidgets-config.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qtwidgetsexports.h \
-		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qwidget.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qwindowdefs.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qobjectdefs.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qnamespace.h \
@@ -919,7 +937,49 @@ release/EditTaskWindow.o: ../../EditTaskWindow.cpp ../../EditTaskWindow.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qinputmethod.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
-		ui_EditTaskWindow.h
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QString \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QTime \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
+		ui_EditTaskWindow.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QVariant \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QApplication \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qapplication.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDateEdit \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdatetimeedit.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qtimezone.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qabstractspinbox.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qvalidator.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qregularexpression.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QGridLayout \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qgridlayout.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qlayout.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qlayoutitem.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qboxlayout.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QHBoxLayout \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QLineEdit \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qlineedit.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qframe.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextcursor.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextdocument.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextformat.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextoption.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QPushButton \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qpushbutton.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qabstractbutton.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QTimeEdit \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QVBoxLayout \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		../../MainWindow.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QMainWindow \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qmainwindow.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qtabwidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\EditTaskWindow.o ..\..\EditTaskWindow.cpp
 
 release/Task.o: ../../Task.cpp ../../Task.h \
@@ -1110,6 +1170,10 @@ release/Task.o: ../../Task.cpp ../../Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/qlocale.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qguiapplication_platform.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/QString \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QTime \
 		ui_Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/QVariant \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QApplication \
@@ -1126,11 +1190,24 @@ release/Task.o: ../../Task.cpp ../../Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qlabel.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qpicture.h \
 		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextdocument.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QLineEdit \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qlineedit.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextcursor.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextformat.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qpen.h \
+		C:/Qt/6.7.2/mingw_64/include/QtGui/qtextoption.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QPushButton \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qpushbutton.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qabstractbutton.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QSpacerItem \
-		C:/Qt/6.7.2/mingw_64/include/QtGui/QMouseEvent
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QVBoxLayout \
+		../../EditTaskWindow.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialogbuttonbox.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\Task.o ..\..\Task.cpp
 
 release/main.o: ../../main.cpp ../../MainWindow.h \
@@ -1325,8 +1402,16 @@ release/main.o: ../../main.cpp ../../MainWindow.h \
 		../../Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/QString \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QTime \
+		../../EditTaskWindow.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QApplication \
-		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qapplication.h
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qapplication.h \
+		../../libs/sqlite/sqlite3.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
 release/MainWindow.o: ../../MainWindow.cpp ../../MainWindow.h \
@@ -1521,6 +1606,13 @@ release/MainWindow.o: ../../MainWindow.cpp ../../MainWindow.h \
 		../../Task.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QWidget \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/QString \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDate \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qdatetime.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/qcalendar.h \
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QTime \
+		../../EditTaskWindow.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QDialog \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialog.h \
 		ui_MainWindow.h \
 		C:/Qt/6.7.2/mingw_64/include/QtCore/QVariant \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QApplication \
@@ -1544,7 +1636,10 @@ release/MainWindow.o: ../../MainWindow.cpp ../../MainWindow.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QStatusBar \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qstatusbar.h \
 		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QVBoxLayout \
-		C:/Qt/6.7.2/mingw_64/include/QtCore/QDebug
+		C:/Qt/6.7.2/mingw_64/include/QtCore/QDebug \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/QMessageBox \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qmessagebox.h \
+		C:/Qt/6.7.2/mingw_64/include/QtWidgets/qdialogbuttonbox.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\MainWindow.o ..\..\MainWindow.cpp
 
 release/moc_EditTaskWindow.o: release/moc_EditTaskWindow.cpp 

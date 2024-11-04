@@ -1,8 +1,9 @@
 #include "MainWindow.h"
 #include "Task.h"
-// #include "EditTaskWindow.h"
+#include "EditTaskWindow.h"
 #include "ui_MainWindow.h"
 #include <QDebug>
+#include <QMessageBox>
 #include <QSpacerItem>
 
 int MainWindow::tasksCount = 0;
@@ -11,10 +12,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    EditTaskWindow* ed = new EditTaskWindow;
     ui->setupUi(this);
     setStyleMain();
 
     connect(ui->btnAdd, &QPushButton::clicked, this, &MainWindow::openEditTaskWindow);
+    connect(ui->btnDelAll, &QPushButton::clicked, this, &MainWindow::delAll);
 
     if (!ui->scrollTasks->widget()) {
         QWidget *containerWidget = new QWidget();
@@ -29,19 +32,19 @@ MainWindow::MainWindow(QWidget *parent)
         ui->scrollTasks->setWidgetResizable(true);
     }
 
-    Task* newTask = new Task("Учить химию");
-    Task* newTask1 = new Task("Покормить собаку");
-    Task* newTask2 = new Task("Посмотреть кину");
-    Task* newTask3 = new Task("Покушать");
+    QDate newTaskDate = QDate::currentDate();
+    QTime newTaskTime = QTime::currentTime();
+    Task* newTask = new Task("Покакать", newTaskDate, newTaskTime);
+
     addTask(newTask);
-    addTask(newTask1);
-    addTask(newTask2);
-    addTask(newTask3);
 
     setMinimumSize(1200, 600);
 }
 
 void MainWindow::addTask(Task* newTask) {
+    if (newTask->getTaskText() == "") {
+        return;
+    }
 
     QWidget *containerWidget = ui->scrollTasks->widget();
     if (!containerWidget) {
@@ -50,7 +53,6 @@ void MainWindow::addTask(Task* newTask) {
 
     QGridLayout *gridLayout = qobject_cast<QGridLayout*>(containerWidget->layout());
     if (!gridLayout) {
-        qDebug() << "Создание нового лэйаута...";
         gridLayout = new QGridLayout(containerWidget);
         gridLayout->setContentsMargins(0, 0, 0, 0);
         gridLayout->setSpacing(10);
@@ -61,10 +63,11 @@ void MainWindow::addTask(Task* newTask) {
     int column = tasksCount % maxColumns;
 
     newTask->setFixedSize(300, 250);
-
     gridLayout->addWidget(newTask, row, column);
 
-    containerWidget->updateGeometry();
+    // Обновление лэйаута
+    gridLayout->update();
+    containerWidget->update();
 
     connect(newTask, &Task::closeRequested, this, [this, newTask]() {
         delTask(newTask);
@@ -72,6 +75,7 @@ void MainWindow::addTask(Task* newTask) {
 
     tasksCount++;
 }
+
 
 
 void MainWindow::delTask(Task* taskToRemove) {
@@ -86,7 +90,7 @@ void MainWindow::delTask(Task* taskToRemove) {
         return;
     }
 
-    // Найти позицию задачи в сетке
+    // Поиск задачи в сетке
     int row = -1;
     int column = -1;
 
@@ -103,16 +107,66 @@ void MainWindow::delTask(Task* taskToRemove) {
     }
 
     if (row != -1 && column != -1) {
-        // Удаляем виджет из лэйаута
-        gridLayout->removeWidget(taskToRemove);
-        taskToRemove->deleteLater(); // Удаляем объект задачи
 
-        // Обновляем количество задач
+        // Удаление виджета из лэйаута
+        gridLayout->removeWidget(taskToRemove);
+
+        taskToRemove->deleteLater(); // Удаление объекта задачи
+
         tasksCount--;
 
     } else {
         qDebug() << "Задача не найдена в лэйауте.";
     }
+}
+
+void MainWindow::delAll() {
+    QWidget *containerWidget = ui->scrollTasks->widget();
+    if (!containerWidget) {
+        qDebug() << "Контейнер виджетов пуст.";
+        return;
+    }
+
+    QGridLayout *gridLayout = qobject_cast<QGridLayout*>(containerWidget->layout());
+    if (!gridLayout) {
+        qDebug() << "Лэйаут не найден.";
+        return;
+    }
+
+
+    QMessageBox* msgBox = new QMessageBox;
+    msgBox->setText("Все задачи будут удалены. Их нельзя будет восстановить.");
+    msgBox->setInformativeText("Удалить?");
+    msgBox->setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+    msgBox->setDefaultButton(QMessageBox::Save);
+    int ret = msgBox->exec();
+
+    switch (ret) {
+    case QMessageBox::Save:
+        // Удаление всех виджетов
+        QLayoutItem *item;
+        while ((item = gridLayout->takeAt(0)) != nullptr) {
+            QWidget *widget = item->widget();
+            if (widget) {
+                widget->deleteLater();
+            }
+            delete item; // Удаление элемента лэйаута
+        }
+        delete msgBox;
+        break;
+    case QMessageBox::Discard:
+        // Don't Save was clicked
+        break;
+    case QMessageBox::Cancel:
+        // Cancel was clicked
+        break;
+    default:
+        // should never be reached
+        break;
+    }
+
+    tasksCount = 0; // Сбрасываем счетчик задач
+    containerWidget->update(); // Обновляем контейнер
 }
 
 void MainWindow::setStyleMain() {
