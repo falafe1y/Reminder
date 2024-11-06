@@ -5,6 +5,9 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QSpacerItem>
+#include <QCloseEvent>
+#include <QFileDialog>
+
 
 int MainWindow::tasksCount = 0;
 
@@ -12,12 +15,13 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    EditTaskWindow* ed = new EditTaskWindow;
     ui->setupUi(this);
     setStyleMain();
 
+    // Коннекты кнопок главного окна
     connect(ui->btnAdd, &QPushButton::clicked, this, &MainWindow::openEditTaskWindow);
     connect(ui->btnDelAll, &QPushButton::clicked, this, &MainWindow::delAll);
+    connect(ui->btnSounds, &QPushButton::clicked, this, &MainWindow::setSound);
 
     if (!ui->scrollTasks->widget()) {
         QWidget *containerWidget = new QWidget();
@@ -39,6 +43,45 @@ MainWindow::MainWindow(QWidget *parent)
     addTask(newTask);
 
     setMinimumSize(1200, 600);
+
+    // Кнопка в трее и иконка окна
+    QIcon mainIcon("C:/Users/79059/Documents/QT/Reminder/image/mainIcon.png");
+
+    setWindowIcon(QIcon(mainIcon));
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(mainIcon));
+
+    QMenu *menu = new QMenu(this);
+    QAction *restoreAction = new QAction("Открыть", this);
+    QAction *quitAction = new QAction("Закрыть", this);
+
+    connect(restoreAction, &QAction::triggered, this, &MainWindow::show);
+    connect(quitAction, &QAction::triggered, qApp, &QApplication::quit);
+
+    menu->addAction(restoreAction);
+    menu->addAction(quitAction);
+    trayIcon->setContextMenu(menu);
+
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &MainWindow::trayIconActivated);
+
+    trayIcon->show();
+
+}
+
+// Скрывать программу в трее при закрытии
+void MainWindow::closeEvent(QCloseEvent *event) {
+    event->ignore();
+    this->hide();
+
+}
+
+// Открыть программу из трея
+void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason) {
+    if (reason == QSystemTrayIcon::Trigger) {
+        this->show();
+        this->raise();
+        this->activateWindow();
+    }
 }
 
 void MainWindow::addTask(Task* newTask) {
@@ -76,7 +119,13 @@ void MainWindow::addTask(Task* newTask) {
     tasksCount++;
 }
 
-
+void MainWindow::setSound() {
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Open Sound File"), "", tr("Audio Files (*.wav *.mp3 *.ogg)"));
+    if (!fileName.isEmpty()) {
+        qDebug() << "Selected file:" << fileName;
+        // Здесь вы можете добавить код для обработки выбранного файла
+    }
+}
 
 void MainWindow::delTask(Task* taskToRemove) {
     QWidget *containerWidget = ui->scrollTasks->widget();
@@ -132,7 +181,6 @@ void MainWindow::delAll() {
         qDebug() << "Лэйаут не найден.";
         return;
     }
-
 
     QMessageBox* msgBox = new QMessageBox;
     msgBox->setText("Все задачи будут удалены. Их нельзя будет восстановить.");
